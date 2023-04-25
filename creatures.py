@@ -1,10 +1,16 @@
 class Creture():
     def __init__(self):
-        self.__atributes = ()
+        self.Level = 1
+        self.BBA = 1
+
+        self.__atributes = (10, 10, 10, 10, 10, 10)
+        
         self.HP = 50
         self.AC = 20
 
-        self.Attack = attack()
+        self.Attack = []
+
+        self.status = status()
 
     @property
     def atributes(self):
@@ -17,8 +23,50 @@ class Creture():
 
         self.__atributes = atributes
 
-    #def SetAttack(self):
+    def __str__(self):
+        return f"""
+        Nivel: {self.Level}
+        HP: {self.HP}
+        CA: {self.AC}"""
+#============================================================================#
+#                                SET ATTACKS                                 #
+
+    def SetAttack(self):
+        handlingAttack = attack()
+
+        handlingAttack.BonusAttack = self.CalculateBonusAttack()
+        handlingAttack.BonusDamage = self.CalculateBonusDamage()
+
+        self.Attack.append(handlingAttack)
+
+
+
+    def CalculateBonusAttack(self):
+
+        handlingBonusAttack = int(self.Level * self.BBA) + self.AtributeBonus()
         
+        return handlingBonusAttack
+    
+    def CalculateBonusDamage(self):
+        handlingBonusDamage = int(self.Level/2) + self.AtributeBonus()
+        
+        return handlingBonusDamage
+    
+
+#======================================#
+#              GET ATRIBUTES           #
+
+    def AtributeBonus(self, Fo=False, De=False, Co=False, In=False, Sa=False, Ca=False):
+        handlingAtributes = (Fo, De, Co, In, Sa, Ca)
+        atributeBonus = 0
+
+        for atribute in handlingAtributes:
+            atributeBonus += ((self.atributes[atribute]-10)/2) * handlingAtributes[atribute]
+            
+        return atributeBonus
+
+#============================================================================#
+#                          CLASS ATTACK & SKILL                              #
 
 class attack():
     def __init__(self, touch=False):
@@ -29,5 +77,18 @@ class attack():
 
         self.savingThrow = "Reflexo" * touch
 
-jão = Creture()
-jão.atributes = ((0,0,0,0,0))
+    def __str__(self):
+        return f"""
+        Ataque: {self.BonusAttack}
+        Dano: {self.dices} + {self.BonusDamage}
+        """
+
+#============================================================================#
+#                               CLASS STATUS                                 #
+
+class status():
+    def __init__(self):
+        self.attackModifier = 0
+        self.damageModifier = 0
+        self.armourModifier = 0
+
