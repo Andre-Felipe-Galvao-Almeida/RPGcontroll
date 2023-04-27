@@ -7,6 +7,7 @@ class Creture():
         
         self.HP = 50
         self.AC = 20
+        self.currentHP = 10
 
         self.Attack = []
 
