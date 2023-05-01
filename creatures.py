@@ -12,6 +12,7 @@ class Creture():
         self.Attack = []
 
         self.status = status()
+        self.initiative = object()
 
     @property
     def atributes(self):
@@ -93,3 +94,34 @@ class status():
         self.damageModifier = 0
         self.armourModifier = 0
 
+#============================================================================#
+#                                 INITIATIVE                                 #
+
+class initiative():
+    def __init__(self):
+        self._LinkedMOB = object()
+        self._value = int()
+
+    @property
+    def LinkedMOB(self):
+        return self._LinkedMOB
+    
+    @LinkedMOB.setter
+    def LinkedMOB(self, mob):
+        if isinstance(mob, Creture):
+            self._LinkedMOB = mob
+        
+        else:
+            raise Exception("Instance not compatible")
+        
+    @property
+    def value(self):
+        return self._value
+    
+    @value.setter
+    def value(self, newValue):
+        if isinstance(newValue, int):
+            self._value = newValue
+
+        else:
+            raise Exception("Please, initiative needs to be int value")
