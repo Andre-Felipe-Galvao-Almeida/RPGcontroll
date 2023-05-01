@@ -1,3 +1,4 @@
+from typing import Optional, Tuple, Union
 import customtkinter as ctk
 from main import *
 
@@ -29,9 +30,37 @@ class creatureScreen(ctk.CTk):
         self.ArmourClass[0].grid(row=1, column=0)
         self.ArmourClass[1].grid(row=1, column=1)
 
+        self.mainloop()
 
+class combatUtilities(ctk.CTk):
+    def __init__(self):
+        super().__init__()
 
-teste = Creture()
-screen = creatureScreen(teste)
+        self.title("Auxiliar de Combates para RPG")
+        self.geometry(f"{580}x{580}")
 
-screen.mainloop()
+        self.roundCounterFrame = ctk.CTkFrame(self)
+        self.roundCounterFrame.grid(row=0, column=0)
+
+        self.round = ctk.IntVar(value=1)
+
+        self.PreviousRoundButton = ctk.CTkButton(self.roundCounterFrame, text="prev", command=self.PrevRound)
+        self.PreviousRoundButton.grid(row=0, column=0)
+
+        self.RoundLabel = ctk.CTkLabel(self.roundCounterFrame, textvariable=self.round)
+        self.RoundLabel.grid(row=0, column=1)
+
+        self.NextRoundButton = ctk.CTkButton(self.roundCounterFrame, text="Next", command=self.NextRound)
+        self.NextRoundButton.grid(row=0, column=2)
+
+        self.mainloop()
+    
+    def NextRound(self):
+        self.handling = self.round.get() + 1
+        self.round.set(self.handling)
+
+    def PrevRound(self):
+        self.handling = self.round.get() - 1
+        self.round.set(self.handling)
+
+screen = combatUtilities()
